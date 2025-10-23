@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weather Pro - Your personal weather dashboard providing real-time weather updates, forecasts, and detailed weather information for any location">
+    <title>Weather App Dashboard</title>
+    <link rel="canonical" href="https://yourdomain.example/index.html">
+    <meta name="robots" content="index,follow">
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Weather Pro - Personal Weather Dashboard">
+    <meta property="og:description" content="Real-time weather updates, forecasts and a friendly assistant to help you plan your day.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.example/index.html">
+    <!-- small generic image, replace with your own hosted image for best results -->
+    <meta property="og:image" content="https://yourdomain.example/social-share.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Preconnect important domains for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.openweathermap.org">
+    <link rel="preconnect" href="https://ipinfo.io">
+    <link rel="preconnect" href="https://www.pexels.com">
+    
+    <!-- Chatbot styles -->
+    <link rel="stylesheet" href="chatbot.css">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="preload" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"></noscript>
+    
+    <!-- Critical CSS inline -->
+    <style>
+        /* Critical CSS will be added here */
+        :root {
+            --primary-color: #0891b2;
+            --text-white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        body { margin: 0; font-family: 'Inter', sans-serif; }
+        .container { width: 100%; max-width: 700px; margin: 20px auto; }
+        .app-title { color: var(--text-white); font-size: 2rem; margin: 0; }
+    </style>
+    
+    <!-- Defer main CSS -->
+    <link rel="stylesheet" href="homepage.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="homepage.css"></noscript>
+</head>
+<body>
+    <div class="video-background" aria-hidden="true">
+        <!-- Use playsinline & muted to allow autoplay on mobile; preload=metadata keeps payload low until user interaction
+             We intentionally don't provide a large poster so the user requested only video shows. Consider adding a tiny, optimized poster for LCP improvements. -->
+        <video autoplay muted loop playsinline preload="metadata" width="1280" height="720" aria-hidden="true">
+            <source src="https://www.pexels.com/download/video/4767569/" type="video/mp4">
+        </video>
+        <div class="video-overlay" aria-hidden="true"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <!-- Enhanced header with modern styling and subtitle -->
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class='bx bx-cloud'></i>
+                    Weather Pro
+                </h1>
+                <p class="app-subtitle">Your Personal Weather Dashboard</p>
+                <!-- Added current time display -->
+                <div class="current-time" id="currentTime"></div>
+            </div>
+            <div class="search-redirect">
+                <button onclick="window.location.href='search.html'" class="search-btn" aria-label="Open search page">
+                    <i class='bx bx-search-alt'></i>
+                    <span>Search Weather</span>
+                </button>
+            </div>
+        </header>
+        
+        <!-- Added quick stats section -->
+        <div class="quick-stats" id="quickStats">
+            <div class="stat-card">
+                <i class='bx bx-current-location'></i>
+                <div class="stat-info">
+                    <span class="stat-label">Your Location</span>
+                    <span class="stat-value" id="userLocation">Getting location...</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class='bx bx-time'></i>
+                <div class="stat-info">
+                    <span class="stat-label">Last Updated</span>
+                    <span class="stat-value" id="lastUpdated">Just now</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="featured-cities">
+            <!-- Added section header -->
+            <div class="section-header">
+                <h2>Featured Cities</h2>
+                <p>Live weather updates from around the world</p>
+            </div>
+            <div class="city-grid" id="cityGrid">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chatbot -->
+    <div class="chat-container minimized" role="dialog" aria-label="Weather Assistant">
+        <div class="chat-header">
+            <span>Weather Assistant</span>
+            <button class="minimize-btn" aria-label="Open chat"><i class='bx bx-bot' aria-hidden="true"></i></button>
+        </div>
+        <div class="chat-messages" role="log" aria-live="polite"></div>
+        <div class="typing-indicator" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask me about weather..." aria-label="Chat message input">
+            <button aria-label="Send message">Send</button>
+        </div>
+        <div class="developer-info">
+            Created by <a href="https://www.linkedin.com/in/shaikh-uzair-353866313" target="_blank" rel="noopener noreferrer">Shaikh Uzair</a>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Enhanced footer with better styling -->
+        <div class="footer-content">
+            <p>Created by <a href="https://www.linkedin.com/in/shaikh-uzair-353866313" target="_blank">Shaikh Uzair</a> • Check detailed forecasts at <a href="https://www.weather.com" target="_blank">Weather.com</a></p>
+            <div class="footer-links">
+                <a href="search.html">Search Weather</a>
+                <span>•</span>
+                <a href="#" onclick="location.reload()">Refresh Data</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts (deferred for non-blocking load) -->
+        <script defer src="chatbot.js"></script>
+        <script defer src="script.js"></script>
+        <script defer src="homepage.js"></script>
+
+        <!-- Structured Data: Organization + WebSite -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Weather Pro",
+            "url": "https://yourdomain.example/",
+            "description": "Personal weather dashboard with forecasts and an assistant",
+            "publisher": {
+                "@type": "Person",
+                "name": "Shaikh Uzair"
+            }
+        }
+        </script>
+</body>
+</html>

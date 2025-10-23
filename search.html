@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="canonical" href="https://yourdomain.example/search.html">
+    <meta name="description" content="Search weather by city or use your current location to get live forecasts and details.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Weather Pro - Search Weather">
+    <meta property="og:description" content="Search weather by city or use your current location to get live forecasts and details.">
+    <meta property="og:url" content="https://yourdomain.example/search.html">
+    <link rel="preconnect" href="https://api.openweathermap.org">
+    <link rel="preconnect" href="https://ipinfo.io">
+    <link rel="preconnect" href="https://www.pexels.com">
+</head>
+<body>
+    <div class="video-background" aria-hidden="true">
+        <video src="https://www.pexels.com/download/video/4767569/" autoplay muted loop playsinline preload="metadata" width="1280" height="720" aria-hidden="true"></video>
+        <div class="video-overlay" aria-hidden="true"></div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            
+            <div class="search-box">
+                <i class='bx bxs-map'></i>
+                <input type="text" placeholder="Enter Your Location" aria-label="Enter Your Location">
+                <button class="search-btn" aria-label="Search">
+                    <i class="bx bx-search"></i>
+                </button>
+                <!-- Added current location button -->
+                <button class="current-location-btn" title="Get Current Location" aria-label="Get Current Location">
+                    <i class="bx bx-current-location"></i>
+                </button>
+            </div>
+
+            <!-- Added comprehensive current time display with date, time, and month -->
+            <div class="current-time-display" id="currentTimeDisplay">
+                <div class="time-section">
+                    <span class="current-time" id="currentTime">12:00 PM</span>
+                    <span class="current-date" id="currentDate">Monday, January 15, 2024</span>
+                </div>
+            </div>
+
+            <div class="weather-box">
+                <img src="https://img.icons8.com/?size=100&id=1AfLv3KbfVba&format=png&color=000000" alt="Weather" />
+                <div class="box">
+                    <div class="info-weather">
+                        <div class="weather">
+                            <p class="temperature">0 <span class="celcius-icon">°C</span></p>
+                            <p class="description">Broken Clouds</p>
+                            <!-- Added location name display -->
+                            <p class="location-name"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weather-details">
+                    <div class="humidity">
+                        <!-- Fixed humidity icon to match dashboard -->
+                        <i class='bx bx-droplet'></i>
+                        <div class="text">
+                            <span>0%</span>
+                        </div>
+                        <p>Humidity</p>
+                    </div>
+                    <div class="wind">
+                        <i class='bx bx-wind'></i>
+                        <div class="text">
+                            <span>0 Km/h</span>
+                        </div>
+                        <p>Wind Speed</p>
+                    </div>
+                    <!-- Replaced precipitation with pressure -->
+                    <div class="pressure">
+                        <i class='bx bx-tachometer'></i>
+                        <div class="text">
+                            <span>0 hPa</span>
+                        </div>
+                        <p>Pressure</p>
+                    </div>
+                    <!-- Added visibility -->
+                    <div class="visibility">
+                        <i class='bx bx-show'></i>
+                        <div class="text">
+                            <span>0 km</span>
+                        </div>
+                        <p>Visibility</p>
+                    </div>
+                </div>
+
+                <!-- Enhanced forecast section with better sizing -->
+                <div class="forecast-section">
+                    <h3>5-Day Forecast</h3>
+                    <div class="forecast-container">
+                        <div class="forecast-item">
+                            <p class="forecast-day">Today</p>
+                            <img src="https://img.icons8.com/?size=120&id=7UYg9itOH2r7&format=png&color=FFD700" alt="Bright yellow sun icon representing clear weather in a cheerful and optimistic forecast section with other weather details nearby" class="forecast-icon">
+                            <p class="forecast-temp">0°</p>
+                            <p class="forecast-desc">Clear</p>
+                        </div>
+                        <div class="forecast-item">
+                            <p class="forecast-day">Tomorrow</p>
+                            <img src="https://img.icons8.com/?size=120&id=mD5PxYIC4jJB&format=png&color=708090" alt="Weather" class="forecast-icon">
+                            <p class="forecast-temp">0°</p>
+                            <p class="forecast-desc">Cloudy</p>
+                        </div>
+                        <div class="forecast-item">
+                            <p class="forecast-day">Day 3</p>
+                            <img src="https://img.icons8.com/?size=120&id=ESeqfDjC5eVO&format=png&color=4A90E2" alt="Weather" class="forecast-icon">
+                            <p class="forecast-temp">0°</p>
+                            <p class="forecast-desc">Rain</p>
+                        </div>
+                        <div class="forecast-item">
+                            <p class="forecast-day">Day 4</p>
+                            <img src="https://img.icons8.com/?size=120&id=7UYg9itOH2r7&format=png&color=FFD700" alt="Bright yellow sun icon representing clear weather in a cheerful and optimistic forecast section with other weather details nearby" class="forecast-icon">
+                            <p class="forecast-temp">0°</p>
+                            <p class="forecast-desc">Sunny</p>
+                        </div>
+                        <div class="forecast-item">
+                            <p class="forecast-day">Day 5</p>
+                            <img src="https://img.icons8.com/?size=120&id=mD5PxYIC4jJB&format=png&color=708090" alt="Weather" class="forecast-icon">
+                            <p class="forecast-temp">0°</p>
+                            <p class="forecast-desc">Partly Cloudy</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="error-message" style="display: none;"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Chatbot -->
+    <div class="chat-container minimized" role="dialog" aria-label="Weather Assistant">
+        <div class="chat-header">
+            <span>Weather Assistant</span>
+            <button class="minimize-btn" aria-label="Open chat"><i class='bx bx-bot' aria-hidden="true"></i></button>
+        </div>
+        <div class="chat-messages" role="log" aria-live="polite"></div>
+        <div class="typing-indicator" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask me about weather..." aria-label="Chat message input">
+            <button aria-label="Send message">Send</button>
+        </div>
+        <div class="developer-info">
+            Created by <a href="https://www.linkedin.com/in/shaikh-uzair-353866313" target="_blank" rel="noopener noreferrer">Shaikh Uzair</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+           <p>Created by <a href="https://www.linkedin.com/in/shaikh-uzair-353866313" target="_blank">Shaikh Uzair</a> • Check detailed forecasts at <a href="https://www.weather.com" target="_blank">Weather.com</a></p>
+            <div class="footer-links">
+                <a href="search.html">Search Weather</a>
+                <span>•</span>
+                <a href="#" onclick="location.reload()">Refresh Data</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script defer src="chatbot.js"></script>
+    <script defer src="script.js"></script>
+</body>
+</html>
